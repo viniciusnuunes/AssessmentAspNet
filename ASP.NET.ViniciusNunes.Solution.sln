@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.NET.ViniciusNunes.WebApp", "ASP.NET.ViniciusNunes.WebApp\ASP.NET.ViniciusNunes.WebApp.csproj", "{850FB94C-EFD2-4CA6-BE2C-178EBD564D15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.NET.ViniciusNunes.Tests", "ASP.NET.ViniciusNunes.Tests\ASP.NET.ViniciusNunes.Tests.csproj", "{094E6EDA-8C6F-4438-AAC6-23400C6778B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{850FB94C-EFD2-4CA6-BE2C-178EBD564D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{850FB94C-EFD2-4CA6-BE2C-178EBD564D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{850FB94C-EFD2-4CA6-BE2C-178EBD564D15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{094E6EDA-8C6F-4438-AAC6-23400C6778B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{094E6EDA-8C6F-4438-AAC6-23400C6778B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{094E6EDA-8C6F-4438-AAC6-23400C6778B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{094E6EDA-8C6F-4438-AAC6-23400C6778B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

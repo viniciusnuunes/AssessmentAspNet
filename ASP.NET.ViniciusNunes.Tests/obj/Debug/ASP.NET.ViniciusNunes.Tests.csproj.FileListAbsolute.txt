@@ -1,0 +1,1 @@
+C:\Users\vinicius.nunes\Desktop\AssessmentAspNet_ViniciusNunes\ASP.NET.ViniciusNunes.Tests\obj\Debug\ASP.NET.ViniciusNunes.Tests.csprojResolveAssemblyReference.cache
