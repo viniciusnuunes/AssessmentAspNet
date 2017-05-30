@@ -1,9 +1,6 @@
-﻿using Microsoft.Practices.Unity;
+﻿using ASP.NET.ViniciusNunes.WebApp.Repository;
+using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ASP.NET.ViniciusNunes.WebApp
@@ -13,6 +10,8 @@ namespace ASP.NET.ViniciusNunes.WebApp
         public static IUnityContainer Initialize()
         {
             var container = new UnityContainer();
+
+            container.RegisterType<ILivroRepository, LivroRepository>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
 

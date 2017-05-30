@@ -11,6 +11,12 @@ namespace ASP.NET.ViniciusNunes.WebApp.Controllers
 {
     public class LivroController : Controller
     {
+        private readonly ILivroRepository repository;
+
+        public LivroController (ILivroRepository repository)
+        {
+            this.repository = repository;
+        }
 
         LivroRepository contexto = new LivroRepository();
 
