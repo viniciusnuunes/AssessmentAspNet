@@ -17,7 +17,7 @@ namespace ASP.NET.ViniciusNunes.WebApp.Controllers
         // GET: Livro
         public ActionResult Index()
         {
-            var livro = contexto.BuscarTodosOsLivros();
+            var livro = contexto.GetAllBooks();
 
             return View(
                 livro.Select(a => new LivroViewModel()
@@ -35,7 +35,7 @@ namespace ASP.NET.ViniciusNunes.WebApp.Controllers
         {
             try
             {
-                var editar = contexto.BuscarTodosOsLivros().Find(a => a.Id == id);
+                var editar = contexto.GetAllBooks().Find(a => a.Id == id);
 
                 LivroViewModel livro = new LivroViewModel()
                 {
@@ -89,7 +89,7 @@ namespace ASP.NET.ViniciusNunes.WebApp.Controllers
         {
             try
             {
-                var editar = contexto.BuscarTodosOsLivros().Find(a => a.Id == Id);
+                var editar = contexto.GetAllBooks().Find(a => a.Id == Id);
 
                 LivroViewModel livro = new LivroViewModel()
                 {

@@ -11,8 +11,10 @@ namespace ASP.NET.ViniciusNunes.WebApp
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
+            AreaRegistration.RegisterAllAreas();            
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            Bootstrapper.Initialize();
         }
     }
 }

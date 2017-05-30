@@ -11,7 +11,7 @@ namespace ASP.NET.ViniciusNunes.WebApp.Repository
 {
     public class EmprestimoRepository
     {
-        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\VSO\viniciusnunes\AssessmentAspNet-master\ASP.NET.ViniciusNunes.WebApp\App_Data\Biblioteca.mdf;Integrated Security=True";
+        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\vinicius.nunes\Desktop\AssessmentAspNet_ViniciusNunes\ASP.NET.ViniciusNunes.WebApp\App_Data\Biblioteca.mdf;Integrated Security=True";
         LivroRepository repoLivros = new LivroRepository();
 
         public IEnumerable<LivroEmprestimo> BuscarTodosOsEmprestimos()
