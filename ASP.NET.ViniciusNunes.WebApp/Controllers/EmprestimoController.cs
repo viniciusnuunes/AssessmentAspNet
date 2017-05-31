@@ -1,21 +1,25 @@
 ﻿using ASP.NET.ViniciusNunes.WebApp.Models;
 using ASP.NET.ViniciusNunes.WebApp.Repository;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ASP.NET.ViniciusNunes.WebApp.Controllers
 {
     public class EmprestimoController : Controller
     {
+        private readonly IEmprestimoRepository repository;
+
+        public EmprestimoController(IEmprestimoRepository repository)
+        {
+            this.repository = repository;
+        }
+
         EmprestimoRepository contexto = new EmprestimoRepository();
 
         // GET: Emprestimo
         public ActionResult Index()
         {
-            var emprestimos = contexto.BuscarTodosOsEmprestimos();
+            var emprestimos = contexto.GetAllEmprestimos();
 
             return View(emprestimos.Select(a => new EmprestimoViewModel()
             {
@@ -29,7 +33,7 @@ namespace ASP.NET.ViniciusNunes.WebApp.Controllers
         // GET: Emprestimo/Details/5
         public ActionResult Details(int id)
         {
-            var emprestimo = contexto.EmprestimoDetalhes(id);
+            var emprestimo = contexto.GetEmprestimosDetails(id);
             var emprestimoView = new EmprestimoViewModel()
             {
                 Id = emprestimo.Id,
@@ -48,7 +52,7 @@ namespace ASP.NET.ViniciusNunes.WebApp.Controllers
 
         // POST: Emprestimo/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(EmprestimoViewModel collection)
         {
             try
             {
@@ -64,7 +68,7 @@ namespace ASP.NET.ViniciusNunes.WebApp.Controllers
         // GET: Emprestimo/Edit/5
         public ActionResult Edit(int id)
         {
-            var emprestimo = contexto.EmprestimoDetalhes(id);
+            var emprestimo = contexto.GetEmprestimosDetails(id);
             var emprestimoView = new EmprestimoViewModel()
             {
                 Id = emprestimo.Id,
@@ -81,8 +85,8 @@ namespace ASP.NET.ViniciusNunes.WebApp.Controllers
         {
             try
             {
-                var emprestimo = contexto.EmprestimoDetalhes(id);
-                contexto.AtualizarEmprestimo(emprestimo, collection);
+                var emprestimo = contexto.GetEmprestimosDetails(id);
+                contexto.AtualizarEmprestimo(emprestimo);
                 return RedirectToAction("Index");
             }
             catch   
@@ -94,7 +98,7 @@ namespace ASP.NET.ViniciusNunes.WebApp.Controllers
         // GET: Emprestimo/Delete/5
         public ActionResult Delete(int id)
         {
-            var emprestimo = contexto.EmprestimoDetalhes(id);
+            var emprestimo = contexto.GetEmprestimosDetails(id);
             var emprestimoView = new EmprestimoViewModel()
             {
                 Id = emprestimo.Id,

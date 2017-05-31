@@ -8,6 +8,7 @@ using ASP.NET.ViniciusNunes.WebApp.Domain;
 using ASP.NET.ViniciusNunes.WebApp.Controllers;
 using ASP.NET.ViniciusNunes.WebApp.Models;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace ASP.NET.ViniciusNunes.Tests
 {
@@ -65,30 +66,44 @@ namespace ASP.NET.ViniciusNunes.Tests
         #endregion
 
         [TestMethod]
-        public void IndexTestMethod()
+        public void CreateLivroTestMethod()
         {
             // Arrange
             var MockRepository = new Mock<ILivroRepository>();
-            MockRepository.Setup(repository => repository.GetAllBooks()).Returns(new List<Livro>()
-            {
-                new Livro() {Nome = "Teste Moq 1", Autor = "Vinicius Nunes", Editora = "Pessoal", Ano = "1990"},
-                new Livro() {Nome = "Teste Moq 2", Autor = "Vinicius Pereira", Editora = "Eu Mesmo", Ano = "1993"}
-            });
 
+            var LivroCreate = new LivroViewModel() { Id = 1, Nome = "Teste Moq Create 1", Autor = "Vinicius Nunes", Editora = "Pessoal", Ano = "1990" };
+            
             var controller = new LivroController(MockRepository.Object);
 
             // Act
-            var result = controller.Index();
+            var result = controller.Create(LivroCreate);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
 
-            var viewResult = result as ViewResult;
-            var model = viewResult.ViewData.Model;
-            Assert.IsInstanceOfType(model, typeof(IEnumerable<LivroViewModel>));
+            var viewResult = result as RedirectToRouteResult;
+            var model = viewResult.RouteValues.Values.First();
+            Assert.IsTrue(model.Equals("Index"));            
+        }
 
-            var livros = model as IEnumerable<LivroViewModel>;
-            Assert.AreEqual(2, livros.Count());
+        [TestMethod]
+        public void EditLivroTestMethod()
+        {
+            // Arrange
+            var mockRepository = new Mock<ILivroRepository>();
+
+            var LivroEdit = new Livro() { Id = 1, Nome = "Teste Moq Edit 1", Autor = "Nunes Vinicius", Editora = "Informal", Ano = "2000" };
+            mockRepository.Setup(repository => repository.AtualizarLivro(LivroEdit));
+            var controller = new LivroController(mockRepository.Object);
+
+            // Act
+            var result = controller.Edit(LivroEdit);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
+            var viewResult = result as RedirectToRouteResult;
+            var model = viewResult.RouteValues.Values.First();
+            Assert.IsTrue(model.Equals("Index"));
         }
     }
 }

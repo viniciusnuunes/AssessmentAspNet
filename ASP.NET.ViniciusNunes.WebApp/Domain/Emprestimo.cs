@@ -5,11 +5,11 @@ using System.Web;
 
 namespace ASP.NET.ViniciusNunes.WebApp.Domain
 {
-    public class LivroEmprestimo
+    public class Emprestimo
     {
         public int Id { get; set; }
-        public DateTime dataEmprestimo { get; set; }
-        public DateTime dataDevolucao { get; set; }
+        public string dataEmprestimo { get; set; }
+        public string dataDevolucao { get; set; }
         public int livroId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ASP.NET.ViniciusNunes.WebApp.Domain;
+using ASP.NET.ViniciusNunes.WebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,20 +10,27 @@ using System.Web.Mvc;
 
 namespace ASP.NET.ViniciusNunes.WebApp.Repository
 {
-    public class EmprestimoRepository
+    public interface IEmprestimoRepository
     {
-        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\vinicius.nunes\Desktop\AssessmentAspNet_ViniciusNunes\ASP.NET.ViniciusNunes.WebApp\App_Data\Biblioteca.mdf;Integrated Security=True";
-        LivroRepository repoLivros = new LivroRepository();
+        List<Emprestimo> GetAllEmprestimos();
+        Emprestimo GetEmprestimosDetails(int idEmprestimo);
+        void AdicionarEmprestimo(EmprestimoViewModel emprestimo);
+        void AtualizarEmprestimo(Emprestimo emprestimo);        
+        void DeletarEmprestimo(int idEmprestimo);
+    }
+    public class EmprestimoRepository : IEmprestimoRepository
+    {
+        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\VSO\viniciusnunes\AssessmentAspNet_ViniciusNunes\ASP.NET.ViniciusNunes.WebApp\App_Data\Biblioteca.mdf;Integrated Security=True";        
 
-        public IEnumerable<LivroEmprestimo> BuscarTodosOsEmprestimos()
+        public List<Emprestimo> GetAllEmprestimos()
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 var commandText = "SELECT * FROM Emprestimos";
                 var selectCommand = new SqlCommand(commandText, connection);
 
-                LivroEmprestimo emprestimo = null;
-                var emprestimos = new List<LivroEmprestimo>();
+                Emprestimo emprestimo = null;
+                var emprestimos = new List<Emprestimo>();
 
                 try
                 {
@@ -32,10 +40,10 @@ namespace ASP.NET.ViniciusNunes.WebApp.Repository
                     {
                         while (reader.Read())
                         {
-                            emprestimo = new LivroEmprestimo();
+                            emprestimo = new Emprestimo();
                             emprestimo.Id = (int)reader["Id"];
-                            emprestimo.dataEmprestimo = DateTime.Parse(reader["dataEmprestimo"].ToString());
-                            emprestimo.dataDevolucao = DateTime.Parse(reader["dataDevolucao"].ToString());
+                            emprestimo.dataEmprestimo = (reader["dataEmprestimo"].ToString());
+                            emprestimo.dataDevolucao = (reader["dataDevolucao"].ToString());
                             emprestimo.livroId = (int)reader["livroId"];
 
                             emprestimos.Add(emprestimo);
@@ -51,14 +59,14 @@ namespace ASP.NET.ViniciusNunes.WebApp.Repository
             }
         }
 
-        public LivroEmprestimo EmprestimoDetalhes(int idEmprestimo)
+        public Emprestimo GetEmprestimosDetails(int idEmprestimo)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 var commandText = "SELECT * FROM Emprestimos WHERE Id = " + idEmprestimo;
                 var selectCommand = new SqlCommand(commandText, connection);
 
-                LivroEmprestimo emprestimo = null;
+                Emprestimo emprestimo = null;
 
                 try
                 {
@@ -68,10 +76,10 @@ namespace ASP.NET.ViniciusNunes.WebApp.Repository
                     {
                         while (reader.Read())
                         {
-                            emprestimo = new LivroEmprestimo();
+                            emprestimo = new Emprestimo();
                             emprestimo.Id = (int)reader["Id"];
-                            emprestimo.dataEmprestimo = DateTime.Parse(reader["dataEmprestimo"].ToString());
-                            emprestimo.dataDevolucao = DateTime.Parse(reader["dataDevolucao"].ToString());
+                            emprestimo.dataEmprestimo = reader["dataEmprestimo"].ToString();
+                            emprestimo.dataDevolucao = reader["dataDevolucao"].ToString();
                             emprestimo.livroId = (int)reader["livroId"];
                         }
                     }
@@ -85,17 +93,16 @@ namespace ASP.NET.ViniciusNunes.WebApp.Repository
             }
         }
 
-        public void AtualizarEmprestimo(LivroEmprestimo emprestimo, FormCollection collection)
+        public void AtualizarEmprestimo(Emprestimo emprestimo)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 string commandText = "UPDATE Emprestimos SET dataEmprestimo=@dataEmprestimo, dataDevolucao=@dataDevolucao, livroId=@livroId Where iD=@Id";
                 SqlCommand insertCommand = new SqlCommand(commandText, connection);
                 insertCommand.Parameters.AddWithValue("@Id", emprestimo.Id);
-                insertCommand.Parameters.AddWithValue("@dataEmprestimo", DateTime.Parse(collection.Get("dataEmprestimo")));
-                insertCommand.Parameters.AddWithValue("@dataDevolucao", DateTime.Parse(collection.Get("dataDevolucao")));
-                string livroIdStr = collection.Get("livroId");
-                insertCommand.Parameters.AddWithValue("@livroId", int.Parse(livroIdStr));
+                insertCommand.Parameters.AddWithValue("@dataEmprestimo", emprestimo.dataEmprestimo);
+                insertCommand.Parameters.AddWithValue("@dataDevolucao", emprestimo.dataDevolucao);
+                insertCommand.Parameters.AddWithValue("@livroId", emprestimo.livroId);
 
                 try
                 {
@@ -109,16 +116,16 @@ namespace ASP.NET.ViniciusNunes.WebApp.Repository
             }
         }
 
-        public void AdicionarEmprestimo(FormCollection collection)
+        public void AdicionarEmprestimo(EmprestimoViewModel emprestimo)
         {
             using (var connection = new SqlConnection(connectionString))
             {
                 string commandText = "INSERT INTO Emprestimos (dataEmprestimo, dataDevolucao, livroId) VALUES (@dataEmprestimo, @dataDevolucao, @livroId)";
                 SqlCommand insertCommand = new SqlCommand(commandText, connection);
-                insertCommand.Parameters.AddWithValue("@dataEmprestimo", DateTime.Parse(collection.Get("dataEmprestimo")));
-                insertCommand.Parameters.AddWithValue("@dataDevolucao", DateTime.Parse(collection.Get("dataDevolucao")));
-                string livroIdStr = collection.Get("livroId");
-                insertCommand.Parameters.AddWithValue("@livroId", int.Parse(livroIdStr));
+                insertCommand.Parameters.AddWithValue("@dataEmprestimo", emprestimo.dataEmprestimo);
+                insertCommand.Parameters.AddWithValue("@dataDevolucao", emprestimo.dataDevolucao);
+                insertCommand.Parameters.AddWithValue("@livroId", emprestimo.livroId);
+                
                 try
                 {
                     connection.Open();
@@ -149,5 +156,5 @@ namespace ASP.NET.ViniciusNunes.WebApp.Repository
                 }
             }
         }
-    }
+    }   
 }

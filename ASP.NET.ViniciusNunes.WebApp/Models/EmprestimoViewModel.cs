@@ -10,13 +10,11 @@ namespace ASP.NET.ViniciusNunes.WebApp.Models
     {
         public int Id { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime dataEmprestimo { get; set; }
+        [Required(ErrorMessage = "Insira a data de emprestimo")]
+        public string dataEmprestimo { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime dataDevolucao { get; set; }
+        [Required(ErrorMessage = "Insira a data de devolução")]
+        public string dataDevolucao { get; set; }
 
         [Required]
         public int livroId { get; set; }

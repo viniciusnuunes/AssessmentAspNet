@@ -2,9 +2,7 @@
 using ASP.NET.ViniciusNunes.WebApp.Models;
 using ASP.NET.ViniciusNunes.WebApp.Repository;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ASP.NET.ViniciusNunes.WebApp.Controllers
@@ -122,11 +120,11 @@ namespace ASP.NET.ViniciusNunes.WebApp.Controllers
 
         // POST: Livro/Edit/5
         [HttpPost]
-        public ActionResult Edit(int Id, Livro livro)
+        public ActionResult Edit(Livro livro)
         {
             if (ModelState.IsValid)
             {
-                contexto.AtualizarLivro(Id, livro);
+                contexto.AtualizarLivro(livro);
                 return RedirectToAction("Index");
             }
             return View("Index");

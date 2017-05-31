@@ -14,13 +14,13 @@ namespace ASP.NET.ViniciusNunes.WebApp.Repository
         List<Livro> GetAllBooks();
         Livro GetBookDetails(int idLivro);
         void AdicionarLivro(Livro livro);
-        void AtualizarLivro(int Id, Livro livro);
+        void AtualizarLivro(Livro livro);
         void DeletarLivro(int id = 0);
     }
 
     public class LivroRepository : ILivroRepository
     {
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\vinicius.nunes\Desktop\AssessmentAspNet_ViniciusNunes\ASP.NET.ViniciusNunes.WebApp\App_Data\Biblioteca.mdf;Integrated Security=True";
+        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\VSO\viniciusnunes\AssessmentAspNet_ViniciusNunes\ASP.NET.ViniciusNunes.WebApp\App_Data\Biblioteca.mdf;Integrated Security=True";
 
         public List<Livro> GetAllBooks()
         {
@@ -117,7 +117,7 @@ namespace ASP.NET.ViniciusNunes.WebApp.Repository
             }
         }
 
-        public void AtualizarLivro(int Id, Livro livro)
+        public void AtualizarLivro(Livro livro)
         {
 
             using (var connection = new SqlConnection(connectionString))

@@ -137,7 +137,7 @@
     <Compile Include="Controllers\EmprestimoController.cs" />
     <Compile Include="Controllers\LivroController.cs" />
     <Compile Include="Domain\Livro.cs" />
-    <Compile Include="Domain\LivroEmprestimo.cs" />
+    <Compile Include="Domain\Emprestimo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
